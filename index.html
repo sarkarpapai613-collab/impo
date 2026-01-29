@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rose Day for You 🌹</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Background layers -->
+  <div class="bg-glow"></div>
+  <canvas id="petals"></canvas>
+  <div id="hearts"></div>
+
+  <!-- Password Lock (optional) -->
+  <section id="lock" class="lock-wrap">
+    <div class="card lock-card">
+      <div class="badge">🌹Happy Rose Day🌹</div>
+      <h1>For My Favorite Person</h1>
+      <p class="muted">Enter the secret word to unlock (hint: Yashasvi / Elizabeth)</p>
+      <div class="lock-row">
+        <input id="lockInput" type="password" placeholder="Type secret..." autocomplete="off" />
+        <button id="unlockBtn" class="btn primary">Unlock</button>
+      </div>
+      <p id="lockStatus" class="status"></p>
+      <p class="muted tiny"></p>
+    </div>
+  </section>
+
+  <!-- Main App -->
+  <main id="app" class="app app-hidden" aria-hidden="true">
+
+    <header class="hero">
+      <div class="hero-left">
+        <div class="chip">🌹 Happy Rose Day</div>
+        <h2>
+          Hey <span id="gfName2">My Love</span>,
+          <br/>
+          this page is a little rose
+          <span class="accent">made of code</span> for you.
+        </h2>
+        <p class="lead">
+          You make my days softer, my nights calmer, and my heart happier.
+        </p>
+
+        <div class="hero-actions">
+          <button id="musicBtn" class="btn ghost">🎵 Play Music</button>
+          <button id="surpriseBtn" class="btn primary">Open Surprise 🌹</button>
+        </div>
+
+        <div class="countdown">
+          <div class="countbox">
+            <div class="num" id="days">0</div>
+            <div class="lab">Days</div>
+          </div>
+          <div class="countbox">
+            <div class="num" id="hours">0</div>
+            <div class="lab">Hours</div>
+          </div>
+          <div class="countbox">
+            <div class="num" id="mins">0</div>
+            <div class="lab">Minutes</div>
+          </div>
+          <div class="countbox">
+            <div class="num" id="secs">0</div>
+            <div class="lab">Seconds</div>
+          </div>
+        </div>
+
+        <p class="muted tiny"></p>
+      </div>
+
+      <div class="hero-right">
+        <div class="rose-card card">
+          <div class="rose-top">
+            <div class="rose-icon">🌹</div>
+            <div>
+              <h3>One Rose for You</h3>
+              <p class="muted">Not just flowers… feelings.</p>
+            </div>
+          </div>
+          <div class="typed-wrap">
+            <p class="typed" id="typedText"></p>
+            <p class="mine" id="mineText"></p>
+            <span class="cursor">|</span>
+          </div>
+          <div class="sig">
+            <span>— Yours, always</span>
+            <b id="yourName">Snehashis</b>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="section-title">
+        <h3>Reasons I Love You 💗</h3>
+        <p class="muted">Tiny truths that feel like forever.</p>
+      </div>
+
+      <div class="grid" id="reasonsGrid">
+        <!-- Cards injected by JS -->
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <h3>Our Little Gallery 📸</h3>
+        <p class="muted"></p>
+      </div>
+
+      <div class="gallery">
+        <div class="gcard card">
+          <div class="gph ph1"></div>
+          <div class="gtext">
+            <b>Smile</b>
+            <span class="muted">My favorite view.</span>
+          </div>
+        </div>
+
+        <div class="gcard card">
+          <div class="gph ph2"></div>
+          <div class="gtext">
+            <b>Eyes</b>
+            <span class="muted">Where I get lost.</span>
+          </div>
+        </div>
+
+        <div class="gcard card">
+          <div class="gph ph3"></div>
+          <div class="gtext">
+            <b>Us</b>
+            <span class="muted">My safe place.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section proposal">
+      <div class="card proposal-card">
+        <h3>Will you accept this rose? 🌹</h3>
+        <p class="muted">And also… will you be mine today, tomorrow, always?</p>
+
+        <div class="proposal-actions">
+          <button id="yesBtn" class="btn primary">Yes 😚</button>
+          <button id="noBtn" class="btn danger">No 🙈</button>
+        </div>
+
+        <p id="proposalMsg" class="proposal-msg"></p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p class="muted">
+        Made with ❤️, roses 🌹
+      </p>
+    </footer>
+
+    <!-- Modal -->
+    <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-card card">
+        <button id="closeModal" class="xbtn" aria-label="Close">✕</button>
+        <div class="modal-rose">🌹</div>
+        <h3>Happy Rose Day, <span id="gfName2">My Love</span>!</h3>
+        <p id="modalMsg" class="modal-msg"></p>
+        <button id="confettiBtn" class="btn primary">More Roses ✨</button>
+      </div>
+    </div>
+
+    <!-- Optional music file: put "song.mp3" in same folder -->
+    <audio id="bgMusic" src="dhun.mp3" preload="auto"></audio>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
