@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kiss Day 💋</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .page-wrap{ min-height:100vh; display:grid; place-items:center; padding:22px; }
+    .page-card{ max-width:920px; width:100%; padding:22px; text-align:center; }
+    .big{ font-size: clamp(28px, 3.2vw, 44px); margin: 0 0 10px; }
+    .sub{ line-height:1.85; margin-top: 10px; }
+    .divider{
+      margin: 18px auto;
+      width: 90px;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(255,63,122,.9), rgba(255,45,85,.9));
+    }
+    .moment{
+      max-width: 780px;
+      margin: 14px auto 0;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.88);
+      line-height: 1.9;
+      text-align:left;
+    }
+    .moment b{ color: rgba(255,255,255,0.96); }
+    .nav{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:18px; }
+    /* 💬 Whisper typed line */
+.whisper{
+  margin: 8px auto 14px;
+  max-width: 65ch;
+  font-weight: 900;
+  letter-spacing: .2px;
+  color: rgba(255,255,255,0.95);
+  text-shadow:
+    0 0 6px rgba(255,63,122,0.55),
+    0 0 14px rgba(255,45,85,0.35);
+  line-height: 1.6;
+  min-height: 30px;
+}
+.whisper::after{
+  content: "▍";
+  margin-left: 4px;
+  opacity: 0.9;
+  animation: blink .9s infinite;
+}
+@keyframes blink{
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce){
+  .whisper::after{ animation: none; }
+}
+
+  </style>
+</head>
+
+<body data-page="kiss">
+  <div class="bg-glow"></div>
+
+  <main class="page-wrap">
+    <section class="card page-card">
+      <div class="chip">💋 13 February — Kiss Day</div>
+      <h1 class="big">Closer… but only your way.</h1>
+      <p class="whisper" id="whisperText"></p>
+
+
+      <p class="muted sub">
+        I don’t want a kiss for show.
+        I want the kind that feels like trust —
+        the kind that makes the world quiet for a second.
+      </p>
+
+      <div class="divider"></div>
+
+      <div class="moment">
+        I’d look at you first — really look.<br/>
+        <b>Check your eyes.</b> Read your comfort.<br/>
+        And only then… if you want it too — I’d come closer.<br/><br/>
+        Not rushed. Not forced. Just… <b>safe</b>.
+      </div>
+
+      <div class="divider"></div>
+
+      <p class="muted sub">
+        And when you’re mine like that…
+        I get possessive in the softest way —
+        the “stay close” way.
+        The “I want you” way.
+        The “you’re safe with me” way. 😈💗
+      </p>
+
+      <div class="nav">
+        <a class="btn ghost" href="hug.html">← Back: Hug Day 🤍</a>
+        <a class="btn primary" href="valentine.html">Next: Valentine’s Day ❤️ →</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="lock.js"></script>
+  <script src="week.js"></script>
+  <script>
+  const whisperEl = document.getElementById("whisperText");
+  const whisperLine = "I want you close… only if you want me close too. 😈💋";
+
+  if (whisperEl){
+    whisperEl.textContent = "";
+    let i = 0;
+    const speed = 30;
+
+    (function typeWhisper(){
+      whisperEl.textContent += whisperLine.charAt(i);
+      i++;
+      if(i < whisperLine.length) setTimeout(typeWhisper, speed);
+    })();
+  }
+</script>
+
+</body>
+</html>
+

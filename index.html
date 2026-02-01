@@ -3,175 +3,207 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rose Day for You 🌹</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Valentine’s Surprise 💘</title>
+  <style>
+    :root{
+      --bg:#07040f;
+      --card: rgba(255,255,255,0.07);
+      --stroke: rgba(255,255,255,0.12);
+      --text:#f7f3ff;
+      --muted: rgba(247,243,255,0.75);
+      --accent:#ff3f7a;
+      --accent2:#ff2d55;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+    }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color: var(--text);
+      background:
+        radial-gradient(900px 700px at 20% 10%, rgba(255,63,122,0.22), transparent 55%),
+        radial-gradient(900px 700px at 80% 30%, rgba(255,45,85,0.16), transparent 60%),
+        radial-gradient(1000px 800px at 50% 90%, rgba(150,90,255,0.12), transparent 55%),
+        var(--bg);
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+      padding: 22px;
+    }
+    .glow{
+      position:fixed; inset:-60px;
+      background:
+        radial-gradient(520px 520px at 30% 30%, rgba(255,63,122,0.16), transparent 60%),
+        radial-gradient(460px 460px at 70% 40%, rgba(255,45,85,0.12), transparent 65%);
+      filter: blur(18px);
+      pointer-events:none;
+      z-index:0;
+    }
+    .card{
+      width:min(820px, 100%);
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      padding: 26px 22px;
+      position:relative;
+      z-index:1;
+      overflow:hidden;
+    }
+    .badge{
+      display:inline-flex;
+      gap:8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,63,122,0.14);
+      border: 1px solid rgba(255,63,122,0.25);
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+    h1{
+      margin: 12px 0 8px;
+      font-size: clamp(28px, 3.3vw, 48px);
+      line-height: 1.1;
+    }
+    .accent{ color: var(--accent); }
+    p{ margin: 0 0 12px; color: var(--muted); line-height: 1.55; }
+    .row{
+      margin-top: 18px;
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .btn{
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      padding: 12px 16px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-weight: 800;
+      transition: transform .15s ease, background .2s ease;
+      user-select:none;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.10); }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(255,63,122,0.98), rgba(255,45,85,0.95));
+      border-color: rgba(255,63,122,0.55);
+    }
+    .btn.primary:hover{
+      background: linear-gradient(135deg, rgba(255,63,122,1), rgba(255,45,85,0.99));
+    }
+    .tiny{ font-size: 12px; opacity: .9; }
+    .hearts{
+      position:absolute; inset:0;
+      pointer-events:none;
+      opacity:.9;
+    }
+    .heart{
+      position:absolute;
+      font-size: 18px;
+      filter: drop-shadow(0 12px 22px rgba(0,0,0,.35));
+      animation: floatUp linear forwards;
+    }
+    @keyframes floatUp{
+      from{ transform: translateY(10vh) scale(1); opacity: 0.95; }
+      to{ transform: translateY(-120vh) scale(1.3); opacity: 0; }
+    }
+    .split{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 14px;
+      align-items:center;
+      margin-top: 10px;
+    }
+    @media (max-width: 860px){
+      .split{ grid-template-columns: 1fr; }
+    }
+    .mini{
+      background: rgba(0,0,0,0.18);
+      border: 1px solid var(--stroke);
+      border-radius: 20px;
+      padding: 14px;
+    }
+    .mini b{ display:block; margin-bottom: 6px; }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono"; }
+  </style>
 </head>
 <body>
+  
 
-  <!-- Background layers -->
-  <div class="bg-glow"></div>
-  <canvas id="petals"></canvas>
-  <div id="hearts"></div>
+  <div class="glow"></div>
 
-  <!-- Password Lock (optional) -->
-  <section id="lock" class="lock-wrap">
-    <div class="card lock-card">
-      <div class="badge">🌹Happy Rose Day🌹</div>
-      <h1>For My Favorite Person</h1>
-      <p class="muted">Enter the secret word to unlock (hint: Yashasvi / Elizabeth)</p>
-      <div class="lock-row">
-        <input id="lockInput" type="password" placeholder="Type secret..." autocomplete="off" />
-        <button id="unlockBtn" class="btn primary">Unlock</button>
-      </div>
-      <p id="lockStatus" class="status"></p>
-      <p class="muted tiny"></p>
-    </div>
-  </section>
+  <div class="card">
+    <div class="hearts" id="hearts"></div>
 
-  <!-- Main App -->
-  <main id="app" class="app app-hidden" aria-hidden="true">
+    <div class="badge">💘 Valentine’s Day</div>
+    <h1>For <span class="accent">Yashasvi</span> — a surprise made with love</h1>
+    <p>
+      I made something for you. Not just a page… a feeling.
+      Open it when you’re ready — and don’t roll your eyes at how clingy I am 😈❤️
+    </p>
 
-    <header class="hero">
-      <div class="hero-left">
-        <div class="chip">🌹 Happy Rose Day</div>
-        <h2>
-          Hey <span id="gfName2">My Love</span>,
-          <br/>
-          this page is a little rose
-          <span class="accent">made of code</span> for you.
-        </h2>
-        <p class="lead">
-          You make my days softer, my nights calmer, and my heart happier.
+    <div class="split">
+      <div class="mini">
+        <b>Before you open it…</b>
+        <p class="tiny">
+          Promise you’ll smile a little. If you don’t, I’ll just try harder until you do.
         </p>
-
-        <div class="hero-actions">
-          <button id="musicBtn" class="btn ghost">🎵 Play Music</button>
-          <button id="surpriseBtn" class="btn primary">Open Surprise 🌹</button>
-        </div>
-
-        <div class="countdown">
-          <div class="countbox">
-            <div class="num" id="days">0</div>
-            <div class="lab">Days</div>
-          </div>
-          <div class="countbox">
-            <div class="num" id="hours">0</div>
-            <div class="lab">Hours</div>
-          </div>
-          <div class="countbox">
-            <div class="num" id="mins">0</div>
-            <div class="lab">Minutes</div>
-          </div>
-          <div class="countbox">
-            <div class="num" id="secs">0</div>
-            <div class="lab">Seconds</div>
-          </div>
-        </div>
-
-        <p class="muted tiny"></p>
+        <p class="tiny mono">Hint: the next page is password locked 🌹</p>
       </div>
 
-      <div class="hero-right">
-        <div class="rose-card card">
-          <div class="rose-top">
-            <div class="rose-icon">🌹</div>
-            <div>
-              <h3>One Rose for You</h3>
-              <p class="muted">Not just flowers… feelings.</p>
-            </div>
-          </div>
-          <div class="typed-wrap">
-            <p class="typed" id="typedText"></p>
-            <p class="mine" id="mineText"></p>
-            <span class="cursor">|</span>
-          </div>
-          <div class="sig">
-            <span>— Yours, always</span>
-            <b id="yourName">Snehashis</b>
-          </div>
+      <div class="mini">
+        <b>One click → next page</b>
+        <p class="tiny">Rose Day page opens right after this.</p>
+
+        <!-- ✅ This opens your rose day page -->
+        <div class="row">
+          <a class="btn primary" href="rose.html">Open my surprise 💘</a>
+          <button class="btn" id="moreHearts">More hearts ✨</button>
         </div>
-      </div>
-    </header>
-
-    <section class="section">
-      <div class="section-title">
-        <h3>Reasons I Love You 💗</h3>
-        <p class="muted">Tiny truths that feel like forever.</p>
-      </div>
-
-      <div class="grid" id="reasonsGrid">
-        <!-- Cards injected by JS -->
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-title">
-        <h3>Our Little Gallery 📸</h3>
-        <p class="muted"></p>
-      </div>
-
-      <div class="gallery">
-        <div class="gcard card">
-          <div class="gph ph1"></div>
-          <div class="gtext">
-            <b>Smile</b>
-            <span class="muted">My favorite view.</span>
-          </div>
-        </div>
-
-        <div class="gcard card">
-          <div class="gph ph2"></div>
-          <div class="gtext">
-            <b>Eyes</b>
-            <span class="muted">Where I get lost.</span>
-          </div>
-        </div>
-
-        <div class="gcard card">
-          <div class="gph ph3"></div>
-          <div class="gtext">
-            <b>Us</b>
-            <span class="muted">My safe place.</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section proposal">
-      <div class="card proposal-card">
-        <h3>Will you accept this rose? 🌹</h3>
-        <p class="muted">And also… will you be mine today, tomorrow, always?</p>
-
-        <div class="proposal-actions">
-          <button id="yesBtn" class="btn primary">Yes 😚</button>
-          <button id="noBtn" class="btn danger">No 🙈</button>
-        </div>
-
-        <p id="proposalMsg" class="proposal-msg"></p>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <p class="muted">
-        Made with ❤️, roses 🌹
-      </p>
-    </footer>
-
-    <!-- Modal -->
-    <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
-      <div class="modal-card card">
-        <button id="closeModal" class="xbtn" aria-label="Close">✕</button>
-        <div class="modal-rose">🌹</div>
-        <h3>Happy Rose Day, <span id="gfName2">My Love</span>!</h3>
-        <p id="modalMsg" class="modal-msg"></p>
-        <button id="confettiBtn" class="btn primary">More Roses ✨</button>
       </div>
     </div>
 
-    <!-- Optional music file: put "song.mp3" in same folder -->
-    <audio id="bgMusic" src="dhun.mp3" preload="auto"></audio>
-  </main>
+    <p class="tiny" style="margin-top:14px;">
+      — Jericho
+    </p>
+  </div>
+ 
+  <script>
+    const wrap = document.getElementById("hearts");
+    const btn = document.getElementById("moreHearts");
 
-  <script src="script.js"></script>
+    function pop(n=22){
+      for(let i=0;i<n;i++){
+        const el = document.createElement("div");
+        el.className = "heart";
+        el.textContent = Math.random() > 0.5 ? "💗" : "💘";
+        el.style.left = (Math.random()*100) + "vw";
+        el.style.bottom = "-30px";
+        el.style.animationDuration = (3.6 + Math.random()*3.2) + "s";
+        el.style.fontSize = (16 + Math.random()*18) + "px";
+        wrap.appendChild(el);
+        setTimeout(()=>el.remove(), 8000);
+      }
+    }
+
+    pop(18);
+    setInterval(()=>pop(6), 900);
+    btn.addEventListener("click", ()=>pop(30));
+
+  </script>
+
+  
+
+
+  
+  
 </body>
 </html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Promise Day 🤞</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .page-wrap{ min-height:100vh; display:grid; place-items:center; padding:22px; }
+    .page-card{ max-width:920px; width:100%; padding:22px; text-align:center; }
+    .big{ font-size: clamp(28px, 3.2vw, 44px); margin: 0 0 10px; }
+    .sub{ line-height:1.8; margin-top: 10px; }
+    .divider{
+      margin: 18px auto;
+      width: 90px;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(255,63,122,.9), rgba(255,45,85,.9));
+    }
+    .vows{
+      text-align:left;
+      max-width: 760px;
+      margin: 14px auto 0;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+    }
+    .vows li{
+      margin: 10px 0;
+      color: rgba(255,255,255,0.86);
+      line-height: 1.65;
+    }
+    .vows b{ color: rgba(255,255,255,0.95); }
+    .nav{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:18px; }
+    /* ❤️ Heartbeat glow on the main card */
+.page-card.heartbeat{
+  animation: heartbeatGlow 2.2s ease-in-out infinite;
+  will-change: transform, box-shadow;
+}
+
+@keyframes heartbeatGlow{
+  0%   { transform: translateY(0) scale(1);   box-shadow: 0 18px 60px rgba(0,0,0,.55); }
+  8%   { transform: translateY(-1px) scale(1.008); box-shadow: 0 18px 60px rgba(0,0,0,.55), 0 0 18px rgba(255,63,122,.18); }
+  16%  { transform: translateY(0) scale(1);   box-shadow: 0 18px 60px rgba(0,0,0,.55); }
+  24%  { transform: translateY(-1px) scale(1.012); box-shadow: 0 18px 60px rgba(0,0,0,.55), 0 0 26px rgba(255,45,85,.22); }
+  40%  { transform: translateY(0) scale(1);   box-shadow: 0 18px 60px rgba(0,0,0,.55); }
+  100% { transform: translateY(0) scale(1);   box-shadow: 0 18px 60px rgba(0,0,0,.55); }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .page-card.heartbeat{ animation: none; }
+}
+
+  </style>
+</head>
+
+<body data-page="promise">
+  <div class="bg-glow"></div>
+
+  <main class="page-wrap">
+    <section class="card page-card heartbeat">
+      <div class="chip">🤞 11 February — Promise Day</div>
+      <h1 class="big">Some promises don’t break.</h1>
+
+      <p class="muted sub">
+        I’m not promising a perfect love.
+        I’m promising a <b>real</b> love —
+        the kind that stays when it’s quiet,
+        and holds tighter when it’s hard.
+      </p>
+
+      <div class="divider"></div>
+
+      <ul class="vows">
+        <li><b>I promise</b> to protect your peace, not disturb it.</li>
+        <li><b>I promise</b> to listen properly — even when I’m emotional.</li>
+        <li><b>I promise</b> to fight for us, not against you.</li>
+        <li><b>I promise</b> to be loyal — in words, in actions, in choices.</li>
+        <li><b>I promise</b> to reassure you until you stop doubting your worth.</li>
+        <li><b>I promise</b> to stay — not just when you’re smiling, but when you’re tired.</li>
+      </ul>
+
+      <div class="divider"></div>
+
+      <p class="muted sub">
+        And yes… I get protective.
+        Not because I want to control you —
+        but because you feel like something precious,
+        and I don’t treat precious things casually. 😈💗
+      </p>
+
+      <div class="nav">
+        <a class="btn ghost" href="teddy.html">← Back: Teddy Day 🧸</a>
+        <a class="btn primary" href="hug.html">Next: Hug Day 🤍 →</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="lock.js"></script>
+  <script src="week.js"></script>
+</body>
+</html>

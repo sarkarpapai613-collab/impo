@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>February 7–14 💘</title>
+    <style>
+      :root {
+        --bg: #07040f;
+        --card: rgba(255, 255, 255, 0.07);
+        --stroke: rgba(255, 255, 255, 0.12);
+        --text: #f7f3ff;
+        --muted: rgba(247, 243, 255, 0.75);
+        --accent: #ff3f7a;
+        --accent2: #ff2d55;
+        --shadow: 0 18px 60px rgba(0, 0, 0, 0.55);
+      }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+        color: var(--text);
+        background:
+          radial-gradient(900px 700px at 20% 10%, rgba(255, 63, 122, 0.22), transparent 55%),
+          radial-gradient(900px 700px at 80% 30%, rgba(255, 45, 85, 0.16), transparent 60%),
+          radial-gradient(1000px 800px at 50% 90%, rgba(150, 90, 255, 0.12), transparent 55%),
+          var(--bg);
+        overflow-x: hidden;
+        display: grid;
+        place-items: center;
+        padding: 22px;
+      }
+      .glow {
+        position: fixed;
+        inset: -60px;
+        background:
+          radial-gradient(520px 520px at 30% 30%, rgba(255, 63, 122, 0.16), transparent 60%),
+          radial-gradient(460px 460px at 70% 40%, rgba(255, 45, 85, 0.12), transparent 65%);
+        filter: blur(18px);
+        pointer-events: none;
+        z-index: 0;
+      }
+      .card {
+        width: min(940px, 100%);
+        background: var(--card);
+        border: 1px solid var(--stroke);
+        border-radius: 26px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(12px);
+        padding: 26px 22px;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+      }
+      .badge {
+        display: inline-flex;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 63, 122, 0.14);
+        border: 1px solid rgba(255, 63, 122, 0.25);
+        font-weight: 800;
+        letter-spacing: 0.2px;
+      }
+      h1 {
+        margin: 12px 0 8px;
+        font-size: clamp(28px, 3.3vw, 48px);
+        line-height: 1.1;
+      }
+      .accent { color: var(--accent); }
+      p {
+        margin: 0 0 12px;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .intro { margin-top: 10px; max-width: 80ch; }
+
+      .timeline {
+        margin-top: 16px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      @media (max-width: 860px) {
+        .timeline { grid-template-columns: 1fr; }
+      }
+      .day {
+        background: rgba(0, 0, 0, 0.18);
+        border: 1px solid var(--stroke);
+        border-radius: 20px;
+        padding: 14px;
+        position: relative;
+        overflow: hidden;
+      }
+      .day::after {
+        content: "";
+        position: absolute;
+        inset: -60px;
+        background: radial-gradient(280px 220px at 20% 20%, rgba(255, 63, 122, 0.14), transparent 65%);
+        pointer-events: none;
+      }
+      .title {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 6px;
+      }
+      .title b { font-size: 16px; }
+      .title span {
+        color: rgba(247, 243, 255, 0.75);
+        font-size: 12px;
+        white-space: nowrap;
+      }
+
+      .quote {
+        margin-top: 14px;
+        padding: 14px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--stroke);
+        color: rgba(247, 243, 255, 0.86);
+        line-height: 1.65;
+      }
+
+      .btnrow {
+        margin-top: 14px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .btn {
+        border: 1px solid var(--stroke);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        padding: 12px 16px;
+        border-radius: 14px;
+        cursor: pointer;
+        font-weight: 800;
+        transition: transform 0.15s ease, background 0.2s ease;
+        user-select: none;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .btn.primary {
+        background: linear-gradient(135deg, rgba(255, 63, 122, 0.98), rgba(255, 45, 85, 0.95));
+        border-color: rgba(255, 63, 122, 0.55);
+      }
+      .btn.primary:hover {
+        background: linear-gradient(135deg, rgba(255, 63, 122, 1), rgba(255, 45, 85, 0.99));
+      }
+      .footer {
+        margin-top: 12px;
+        color: rgba(247, 243, 255, 0.72);
+        font-size: 12px;
+      }
+
+      /* ✅ NEW: Hero sentence bigger + pink tuning + animate once */
+      .big-love{
+        margin-top: 14px;
+        max-width: 90ch;
+        font-size: clamp(20px, 2.2vw, 28px);
+        line-height: 1.7;
+        color: rgba(255,255,255,0.95);
+
+        opacity: 0;
+        transform: translateY(12px);
+        animation: loveReveal 1.4s ease-out forwards;
+        animation-delay: 0.3s;
+      }
+      @keyframes loveReveal{
+        0%{
+          opacity: 0;
+          transform: translateY(12px);
+          text-shadow: 0 0 0 rgba(255,63,122,0);
+        }
+        60%{
+          opacity: 1;
+          transform: translateY(-2px);
+          text-shadow: 0 0 22px rgba(255,63,122,0.25);
+        }
+        100%{
+          opacity: 1;
+          transform: translateY(0);
+          text-shadow: 0 0 14px rgba(255,63,122,0.18);
+        }
+      }
+
+      .pink{ color:#ff3f7a; }
+      .pink-soft{ color:#ff7fa6; }
+      .pink-strong{
+        color:#ff2d55;
+        text-shadow: 0 0 6px rgba(255,45,85,0.6), 0 0 14px rgba(255,45,85,0.35);
+      }
+
+      @media (prefers-reduced-motion: reduce){
+        .big-love{
+          animation:none;
+          opacity:1;
+          transform:none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="glow"></div>
+
+    <main class="card">
+      <div class="badge">💘 February 7 – February 14</div>
+      <h1>A week written <span class="accent">only for you</span></h1>
+
+      <!-- ✅ UPDATED HERO SENTENCE -->
+      <p class="intro big-love">
+        <strong>
+          February isn’t just a month to me.
+          <br />
+          It’s a <span class="pink">countdown</span> — not to a date, but to
+          <span class="pink-soft">you</span>.
+          <br />
+          Each day from the 7th to the 14th feels like a step closer
+          to the thing I want most:
+          <span class="pink-strong">your smile</span>.
+        </strong>
+      </p>
+
+      <section class="timeline">
+        <article class="day">
+          <div class="title"><b>7 Feb — Rose Day 🌹</b><span>It begins here</span></div>
+          <p>A rose, not because flowers matter… but because <b>you</b> do.</p>
+        </article>
+
+        <article class="day">
+          <div class="title"><b>8 Feb — Propose Day 💌</b><span>I choose you</span></div>
+          <p>Not a question — a reminder: I’ll choose you again, and again, and always.</p>
+        </article>
+
+        <article class="day">
+          <div class="title"><b>9 Feb — Chocolate Day 🍫</b><span>Sweet comfort</span></div>
+          <p>Because love should be sweet, comforting, and something you crave without guilt.</p>
+        </article>
+
+        <article class="day">
+          <div class="title"><b>10 Feb — Teddy Day 🧸</b><span>Warmth</span></div>
+          <p>For softness, warmth, and the feeling of being held even when I’m not there.</p>
+        </article>
+
+        <article class="day">
+          <div class="title"><b>11 Feb — Promise Day 🤞</b><span>Quiet vows</span></div>
+          <p>To stay, to care, and to fight for us — even on days that aren’t easy.</p>
+        </article>
+
+        <article class="day">
+          <div class="title"><b>12 Feb — Hug Day 🤍</b><span>Healing</span></div>
+          <p>For hugs that heal — the kind that say “I’m here” without words.</p>
+        </article>
+
+        <article class="day">
+          <div class="title"><b>13 Feb — Kiss Day 💋</b><span>Closer</span></div>
+          <p>For closeness, trust, and everything beautiful that stays unspoken.</p>
+        </article>
+
+        <article class="day">
+          <div class="title"><b>14 Feb — Valentine’s Day ❤️</b><span>The reminder</span></div>
+          <p>Not the end — just the reminder of why it all started: loving you feels right.</p>
+        </article>
+      </section>
+
+      <div class="quote">
+        <b>This page is just the beginning.</b><br />
+        The next one is for Valentine’s Day ❤️ — and after that… the rose is waiting 🌹
+      </div>
+
+      <div class="btnrow">
+        <a class="btn primary" href="index.html">Continue to Valentine’s Day ❤️</a>
+        <a class="btn" href="#" onclick="alert('You’re getting closer 😈'); return false;">A little hint</a>
+      </div>
+
+      <div class="footer">— Made with ❤️ by Jericho</div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hug Day 🤍</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .page-wrap{ min-height:100vh; display:grid; place-items:center; padding:22px; }
+    .page-card{ max-width:920px; width:100%; padding:22px; text-align:center; }
+    .big{ font-size: clamp(28px, 3.2vw, 44px); margin: 0 0 10px; }
+    .sub{ line-height:1.85; margin-top: 10px; }
+    .divider{
+      margin: 18px auto;
+      width: 90px;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(255,63,122,.9), rgba(255,45,85,.9));
+    }
+    .hug-note{
+      max-width: 780px;
+      margin: 14px auto 0;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.88);
+      line-height: 1.85;
+      text-align:left;
+    }
+    .hug-note b{ color: rgba(255,255,255,0.96); }
+    .nav{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:18px; }
+    /* 🤍 Breathing effect on the main card */
+.page-card.breathe{
+  animation: breathe 3.6s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes breathe{
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.012); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .page-card.breathe{ animation: none; }
+}
+
+  </style>
+</head>
+
+<body data-page="hug">
+  <div class="bg-glow"></div>
+
+  <main class="page-wrap">
+    <section class="card page-card breathe">
+      <div class="chip">🤍 12 February — Hug Day</div>
+      <h1 class="big">Come here. Let me fix the day.</h1>
+
+      <p class="muted sub">
+        A hug is the safest promise —
+        it says “I’m here”
+        without asking you to explain anything.
+      </p>
+
+      <div class="divider"></div>
+
+      <div class="hug-note">
+        <b>If you’re tired,</b> I’ll hold you.<br/>
+        <b>If you’re overthinking,</b> I’ll calm you down.<br/>
+        <b>If you feel alone,</b> I’ll remind you you’re not.<br/><br/>
+        I don’t want you to carry everything by yourself.
+        Not anymore.
+      </div>
+
+      <div class="divider"></div>
+
+      <p class="muted sub">
+        And when I hug you…
+        I won’t let go quickly.
+        Not to trap you —
+        but to make you feel safe enough to breathe. 😈🤍
+      </p>
+
+      <div class="nav">
+        <a class="btn ghost" href="promise.html">← Back: Promise Day 🤞</a>
+        <a class="btn primary" href="kiss.html">Next: Kiss Day 💋 →</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="lock.js"></script>
+  <script src="week.js"></script>
+</body>
+</html>

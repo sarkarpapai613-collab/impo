@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Valentine’s Day ❤️</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .page-wrap{ min-height:100vh; display:grid; place-items:center; padding:22px; }
+    .page-card{ max-width:920px; width:100%; padding:22px; text-align:center; position:relative; }
+
+    .big{ font-size: clamp(28px, 3.2vw, 52px); margin: 0 0 10px; }
+    .sub{ line-height:1.85; margin-top: 10px; }
+
+    .divider{
+      margin: 18px auto;
+      width: 90px;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(255,63,122,.9), rgba(255,45,85,.9));
+    }
+
+    .final{
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      line-height: 1.85;
+      color: rgba(255,255,255,0.88);
+      text-align:left;
+      max-width: 820px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+
+    .val-box{
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      max-width: 820px;
+      margin-left:auto;
+      margin-right:auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .val-actions{
+      margin-top: 12px;
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      position: relative;
+      min-height: 70px;
+    }
+
+    .val-msg{
+      margin-top: 10px;
+      font-weight: 800;
+      color: rgba(255,255,255,0.88);
+      min-height: 22px;
+    }
+
+    .nav{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:18px; }
+
+    /* Modal */
+    .modal{
+      position: fixed;
+      inset: 0;
+      display:grid;
+      place-items:center;
+      padding: 18px;
+      background: rgba(0,0,0,0.62);
+      backdrop-filter: blur(10px);
+      z-index: 9999;
+    }
+    .hidden{ display:none; }
+
+    .modal-card{
+      width: min(760px, 100%);
+      padding: 18px;
+      text-align:center;
+      position: relative;
+    }
+    .xbtn{
+      position:absolute;
+      top: 12px;
+      right: 12px;
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.92);
+      cursor:pointer;
+      font-weight: 900;
+    }
+    .biglove{
+      font-size: clamp(20px, 2.4vw, 28px);
+      margin: 10px 0 6px;
+      font-weight: 900;
+    }
+    .modal-text{
+      color: rgba(255,255,255,0.85);
+      line-height: 1.85;
+      margin: 0 auto 10px;
+      max-width: 70ch;
+    }
+    .pulse-heart{
+      font-size: 38px;
+      display:inline-block;
+      animation: heartPulse 1.4s ease-in-out infinite;
+      filter: drop-shadow(0 10px 22px rgba(0,0,0,.45));
+    }
+    @keyframes heartPulse{
+      0%{ transform: scale(1); }
+      18%{ transform: scale(1.08); }
+      36%{ transform: scale(1); }
+      52%{ transform: scale(1.12); }
+      70%{ transform: scale(1); }
+      100%{ transform: scale(1); }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .pulse-heart{ animation:none; }
+    }
+    /* 🌹💗 Burst layer + particles */
+#burstLayer{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10000; /* above everything */
+  overflow: hidden;
+}
+
+.burst{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.particle{
+  position: absolute;
+  font-size: 20px;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,.45));
+  opacity: 0;
+  animation: popFly var(--dur, 1200ms) ease-out forwards;
+}
+
+@keyframes popFly{
+  0%   { transform: translate(0,0) scale(.8); opacity: 0; }
+  12%  { opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(1.15); opacity: 0; }
+}
+
+  </style>
+</head>
+
+<body data-page="valentine">
+  <div class="bg-glow"></div>
+
+  <main class="page-wrap">
+    <section class="card page-card">
+      <div class="chip">❤️ 14 February — Valentine’s Day</div>
+      <h1 class="big">My Valentine is you, Yashasvi.</h1>
+
+      <p class="muted sub">
+        Not because a date says so — but because my heart does.
+        You’re my favorite person, my safe place, and my best habit.
+      </p>
+
+      <div class="divider"></div>
+
+      <p class="muted sub">
+        I don’t want a love that comes and goes.
+        I want the kind that stays consistent —
+        the kind where you feel protected, respected, and wanted.
+      </p>
+
+      <p class="muted sub">
+        And yes… I get clingy.
+        Not to control you —
+        but because I genuinely like you close.
+        You calm me. You soften me. You feel like home. 😈💗
+      </p>
+
+      <div class="final">
+        If loving you means being a little possessive, a little clingy, a little too much…
+        then fine. I’m guilty. 😈💗
+        <br/>
+        <b>I want you close — today, tomorrow, and always.</b>
+      </div>
+
+      <div class="val-box">
+        <h2 style="margin: 0 0 6px; font-size: clamp(20px, 2.2vw, 28px); font-weight: 900;">
+          Will you be my Valentine? 💌
+        </h2>
+        <p class="muted" style="line-height:1.75; margin: 0;">
+          Choose wisely… because I’m not letting you go that easily 😈
+        </p>
+
+        <div class="val-actions" id="valArea">
+          <button id="yesVal" class="btn primary">Yes 😚</button>
+          <button id="noVal" class="btn danger">No 🙈</button>
+        </div>
+
+        <div class="val-msg" id="valMsg"></div>
+      </div>
+
+      <div class="nav">
+        <a class="btn ghost" href="kiss.html">← Back: Kiss Day 💋</a>
+        <a class="btn primary" href="rose.html">Back to Rose Day 🌹</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- YES modal -->
+  <div id="yesModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-card card">
+      <button class="xbtn" id="closeYes" aria-label="Close">✕</button>
+
+      <div class="pulse-heart">💗</div>
+      <div class="biglove">Yesss 😭💘</div>
+
+      <p class="modal-text">
+        You just made me the happiest person.
+        From today, you’re not just my Valentine —
+        you’re my favorite choice, my safe place, my forever habit.
+        <br/><br/>
+        I’ll love you softly when you’re tired,
+        proudly when you’re shining,
+        and protectively when the world feels loud.
+        <br/><br/>
+        <b>Come here… I’m hugging you in my head right now. 😈❤️</b>
+      </p>
+
+      <button class="btn primary" id="okYes">Okay 😚</button>
+    </div>
+  </div>
+  <!-- Burst layer -->
+<div id="burstLayer" aria-hidden="true"></div>
+
+
+  <script>
+    // Valentine Yes/No
+    const yesBtn = document.getElementById("yesVal");
+    const noBtn = document.getElementById("noVal");
+    const msg = document.getElementById("valMsg");
+    const area = document.getElementById("valArea");
+
+    const yesModal = document.getElementById("yesModal");
+    const closeYes = document.getElementById("closeYes");
+    const okYes = document.getElementById("okYes");
+
+    yesBtn?.addEventListener("click", (e) => {
+  msg.textContent = "Good choice 😈💗";
+  msg.style.color = "#38d97a";
+  yesModal.classList.remove("hidden");
+
+  // 🌹💗 burst at the button position
+  const r = yesBtn.getBoundingClientRect();
+  burstRoses(r.left + r.width/2, r.top + r.height/2);
+});
+
+
+    function closeModal(){
+      yesModal.classList.add("hidden");
+    }
+    closeYes?.addEventListener("click", closeModal);
+    okYes?.addEventListener("click", closeModal);
+    yesModal?.addEventListener("click", (e) => {
+      if (e.target === yesModal) closeModal();
+    });
+
+    // NO button: impossible to click + escapes everywhere
+    function rand(min, max){ return Math.random() * (max - min) + min; }
+    function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+    function escapeNo(){
+      if (!noBtn || !area) return;
+
+      // briefly disable clicks so it feels impossible
+      noBtn.style.pointerEvents = "none";
+
+      const rect = area.getBoundingClientRect();
+
+      // Large move range (relative positioning)
+      const x = rand(-rect.width/2, rect.width/2);
+      const y = rand(-rect.height/2, rect.height/2);
+
+      noBtn.style.position = "relative";
+      noBtn.style.left = clamp(x, -220, 220) + "px";
+      noBtn.style.top  = clamp(y, -120, 120) + "px";
+
+      msg.textContent = "Nice try 😈 …press YES.";
+      msg.style.color = "rgba(255,255,255,0.92)";
+
+      setTimeout(() => { noBtn.style.pointerEvents = "auto"; }, 180);
+    }
+
+    // Desktop
+    noBtn?.addEventListener("mouseenter", escapeNo);
+    noBtn?.addEventListener("mousemove", escapeNo);
+
+    // Mobile / touch
+    noBtn?.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      escapeNo();
+    }, { passive:false });
+
+    // If somehow clicked
+    noBtn?.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      escapeNo();
+    });
+    function burstRoses(x, y){
+  const layer = document.getElementById("burstLayer");
+  if (!layer) return;
+
+  const burst = document.createElement("div");
+  burst.className = "burst";
+  burst.style.left = x + "px";
+  burst.style.top  = y + "px";
+  burst.style.transform = "translate(-50%, -50%)";
+  layer.appendChild(burst);
+
+  const icons = ["🌹","💗","💘","✨","🌸"];
+  const count = 34;
+
+  for (let i = 0; i < count; i++){
+    const p = document.createElement("span");
+    p.className = "particle";
+    p.textContent = icons[Math.floor(Math.random() * icons.length)];
+
+    const dx = (Math.random() * 520 - 260).toFixed(0) + "px";
+    const dy = (Math.random() * 420 - 260).toFixed(0) + "px";
+    const rot = (Math.random() * 260 - 130).toFixed(0) + "deg";
+    const dur = (900 + Math.random() * 700).toFixed(0) + "ms";
+    const size = (16 + Math.random() * 18).toFixed(0) + "px";
+
+    p.style.setProperty("--dx", dx);
+    p.style.setProperty("--dy", dy);
+    p.style.setProperty("--rot", rot);
+    p.style.setProperty("--dur", dur);
+    p.style.fontSize = size;
+
+    // little random delay so it feels organic
+    p.style.animationDelay = (Math.random() * 80).toFixed(0) + "ms";
+
+    burst.appendChild(p);
+  }
+
+  setTimeout(() => burst.remove(), 1800);
+}
+
+  </script>
+
+  <!-- Global lock + date lock + progress -->
+  <script src="lock.js"></script>
+  <script src="week.js"></script>
+</body>
+</html>
