@@ -4,172 +4,860 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Chocolate Day 🍫</title>
+
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
   <style>
-
-    /* 🍫 Floating chocolates */
-.choco-float{
-  position: relative;
-  height: 58px;
-  margin: 8px auto 14px;
-  width: min(420px, 100%);
-  overflow: hidden;
-  opacity: 0.95;
-}
-.choco{
-  position: absolute;
-  bottom: -4px;
-  font-size: 22px;
-  filter: drop-shadow(0 8px 18px rgba(0,0,0,.45));
-  animation: floatUp 4.2s ease-in-out infinite;
-}
-.c1{ left: 6%;  animation-delay: 0s;   transform: rotate(-8deg); }
-.c2{ left: 22%; animation-delay: .6s;  transform: rotate(10deg); }
-.c3{ left: 45%; animation-delay: 1.2s; transform: rotate(-6deg); }
-.c4{ left: 68%; animation-delay: 1.8s; transform: rotate(9deg); }
-.c5{ left: 86%; animation-delay: 2.4s; transform: rotate(-10deg); }
-
-@keyframes floatUp{
-  0%   { transform: translateY(22px) scale(0.95); opacity: 0; }
-  15%  { opacity: 1; }
-  50%  { transform: translateY(-14px) scale(1); opacity: 0.95; }
-  85%  { opacity: 1; }
-  100% { transform: translateY(22px) scale(0.95); opacity: 0; }
-}
-
-/* 💬 Whisper typed line */
-.whisper{
-  margin: 6px auto 16px;
-  max-width: 65ch;
-  font-weight: 900;
-  letter-spacing: .2px;
-  color: rgba(255,255,255,0.95);
-  text-shadow:
-    0 0 6px rgba(255,63,122,0.55),
-    0 0 14px rgba(255,45,85,0.35);
-  line-height: 1.6;
-  min-height: 30px;
-}
-
-/* caret */
-.whisper::after{
-  content: "▍";
-  margin-left: 4px;
-  opacity: 0.9;
-  animation: blink .9s infinite;
-}
-@keyframes blink{
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-}
-
-    .page-wrap{ min-height:100vh; display:grid; place-items:center; padding:22px; }
-    .page-card{ max-width:920px; width:100%; padding:22px; text-align:center; }
-    .big{ font-size: clamp(28px, 3.2vw, 44px); margin: 0 0 10px; }
-    .sub{ line-height:1.75; margin-top: 8px; }
-    .divider{
-      margin: 18px auto;
-      width: 80px;
-      height: 3px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, rgba(255,63,122,.9), rgba(255,45,85,.9));
+    :root{
+      --neon-red: 255, 20, 70;
+      --gloss-red: 255, 0, 60;
+      --radius: 22px;
     }
-    .nav{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:18px; }
+
+    html, body { height: 100%; }
+
+    /* ===== Neon Red + Glossy Red Background ===== */
+    body{
+      margin:0;
+      overflow-x:hidden;
+      color: rgba(255,255,255,.95);
+      font-family: "Poppins", system-ui, -apple-system, sans-serif;
+
+      background:
+        radial-gradient(1200px 800px at 18% 18%, rgba(var(--neon-red), .62), transparent 60%),
+        radial-gradient(900px 680px at 82% 32%, rgba(var(--gloss-red), .38), transparent 62%),
+        radial-gradient(1000px 720px at 50% 86%, rgba(var(--neon-red), .34), transparent 62%),
+        linear-gradient(135deg, rgb(28,0,8), rgb(10,0,3));
+      background-attachment: fixed;
+    }
+
+    /* Gloss film */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:-25%;
+      pointer-events:none;
+      z-index:0;
+      background:
+        radial-gradient(900px 460px at 50% 10%,
+          rgba(255,255,255,.18),
+          rgba(255,255,255,.08),
+          transparent 72%
+        ),
+        linear-gradient(110deg,
+          rgba(255,255,255,.10),
+          transparent 35%,
+          rgba(255,255,255,.06),
+          transparent 70%
+        );
+      mix-blend-mode: screen;
+      filter: blur(16px);
+      opacity: .8;
+      animation: glossMove 8.5s ease-in-out infinite;
+    }
+    @keyframes glossMove{
+      0%,100%{ transform: translate3d(-1.5%, -1%, 0) rotate(-1deg); }
+      50%{ transform: translate3d(1.5%, 1%, 0) rotate(1deg); }
+    }
+
+    /* Cursor glow */
+    .cursor-glow{
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .cursor-glow::before{
+      content:"";
+      position:absolute;
+      width: 460px;
+      height: 460px;
+      border-radius: 999px;
+      transform: translate3d(var(--x, -999px), var(--y, -999px), 0);
+      background:
+        radial-gradient(circle at 30% 30%,
+          rgba(255,70,130,.26),
+          rgba(255,0,60,.16),
+          transparent 60%
+        );
+      filter: blur(12px);
+      opacity: .85;
+      transition: transform 80ms linear;
+      mix-blend-mode: screen;
+    }
+
+    /* ===== Emoji background ===== */
+    .emoji-bg{
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .emoji-bg .e{
+      position: absolute;
+      opacity: 0;
+      transform: translateY(30px) scale(.95);
+      animation: driftUp var(--dur, 14s) linear infinite;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.40));
+      will-change: transform, opacity;
+    }
+    @keyframes driftUp{
+      0%   { transform: translateY(60px) translateX(0) rotate(var(--r, 0deg)) scale(.92); opacity: 0; }
+      10%  { opacity: .85; }
+      50%  { opacity: .55; }
+      90%  { opacity: .85; }
+      100% { transform: translateY(-140vh) translateX(var(--dx, 18px)) rotate(calc(var(--r, 0deg) + 14deg)) scale(1.08); opacity: 0; }
+    }
+
+    /* ===== Stage ===== */
+    .stage{
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding: 22px;
+      position:relative;
+      z-index: 2;
+    }
+    .wrap{
+      width:min(980px, 100%);
+      position:relative;
+      perspective: 1400px;
+      z-index:2;
+    }
+
+    /* ===== Envelope ===== */
+    .envelope{
+      position:relative;
+      width:min(860px, 100%);
+      height: 860px; /* enough height for 2-column content */
+      margin: 0 auto;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow:
+        0 26px 90px rgba(0,0,0,.70),
+        0 0 0 1px rgba(255,0,70,.16) inset,
+        0 0 44px rgba(255,0,60,.14);
+      overflow: hidden; /* keeps everything inside */
+      transform: translateZ(0);
+    }
+
+    .envelope::after{
+      content:"";
+      position:absolute;
+      inset: -1px;
+      border-radius: var(--radius);
+      padding: 1px;
+      background: linear-gradient(135deg,
+        rgba(255,0,60,.55),
+        rgba(255,255,255,.12),
+        rgba(255,40,110,.44)
+      );
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events:none;
+      opacity: .92;
+      z-index: 3;
+    }
+
+    .envelope::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      z-index: 2;
+      opacity:.70;
+      background:
+        radial-gradient(circle at 18% 24%, rgba(255,255,255,.10), transparent 52%),
+        radial-gradient(circle at 72% 76%, rgba(255,0,60,.08), transparent 56%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.028) 0px, rgba(255,255,255,.028) 1px, transparent 1px, transparent 5px),
+        repeating-linear-gradient(90deg, rgba(0,0,0,.028) 0px, rgba(0,0,0,.028) 1px, transparent 1px, transparent 6px);
+      mix-blend-mode: overlay;
+      filter: blur(.15px);
+    }
+
+    /* Flap */
+    .flap{
+      position:absolute;
+      inset: 0;
+      transform-origin: top center;
+      transform: rotateX(0deg);
+      transition: transform 820ms cubic-bezier(.2,.9,.2,1);
+      z-index: 8;
+      pointer-events:none;
+    }
+    .flap::before{
+      content:"";
+      position:absolute;
+      left:0; right:0;
+      top:0;
+      height: 44%;
+      background: linear-gradient(135deg,
+        rgba(255,0,60,.22),
+        rgba(255,255,255,.12),
+        rgba(255,0,60,.14)
+      );
+      clip-path: polygon(0 0, 100% 0, 50% 72%);
+      filter: drop-shadow(0 22px 34px rgba(0,0,0,.45));
+      border-bottom: 1px solid rgba(255,255,255,.12);
+    }
+
+    .fold{
+      position:absolute;
+      left:0; right:0;
+      bottom:0;
+      height: 40%;
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      clip-path: polygon(0 100%, 50% 30%, 100% 100%, 0 100%);
+      opacity:.90;
+      z-index: 6;
+      pointer-events:none;
+    }
+    .side{ position:absolute; inset:0; z-index: 7; pointer-events:none; }
+    .side::before,.side::after{
+      content:"";
+      position:absolute;
+      top:0; bottom:0;
+      width: 58%;
+      opacity:.60;
+      background: linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    }
+    .side::before{ left:0; clip-path: polygon(0 0, 100% 50%, 0 100%); }
+    .side::after{ right:0; clip-path: polygon(100% 0, 0 50%, 100% 100%); }
+
+    /* Ribbon */
+    .ribbon{ position:absolute; inset:0; z-index: 9; pointer-events:none; }
+    .ribbon .band-v, .ribbon .band-h{
+      position:absolute;
+      border: 1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,0,60,.18), rgba(255,255,255,.03));
+      box-shadow: 0 14px 30px rgba(0,0,0,.26);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      opacity: .48;
+    }
+    .ribbon .band-v{
+      top:-10%; bottom:-10%;
+      width: 64px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 999px;
+    }
+    .ribbon .band-h{
+      left:-10%; right:-10%;
+      height: 44px;
+      top: 52%;
+      transform: translateY(-50%);
+      border-radius: 999px;
+      opacity: .38;
+    }
+    .ribbon .knot{
+      position:absolute;
+      left:50%;
+      top: 52%;
+      transform: translate(-50%, -50%);
+      width: 92px;
+      height: 92px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,.20), transparent 42%),
+        linear-gradient(135deg, rgba(255,0,60,.38), rgba(255,40,110,.30), rgba(255,255,255,.06));
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: 0 18px 38px rgba(0,0,0,.32);
+      opacity: .55;
+      animation: bowPulse 3.2s ease-in-out infinite;
+      mix-blend-mode: screen;
+    }
+    .ribbon .loop{
+      position:absolute;
+      top: 52%;
+      width: 120px;
+      height: 78px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.14);
+      opacity: .35;
+      box-shadow: 0 14px 30px rgba(0,0,0,.18);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      animation: loopGlow 3.2s ease-in-out infinite;
+      mix-blend-mode: screen;
+    }
+    .ribbon .loop.left{ left: calc(50% - 150px); transform: translateY(-50%) rotate(-12deg); }
+    .ribbon .loop.right{ left: calc(50% + 30px); transform: translateY(-50%) rotate(12deg); }
+    @keyframes bowPulse{
+      0%,100%{ transform: translate(-50%, -50%) scale(1); filter: brightness(1); }
+      50%{ transform: translate(-50%, -50%) scale(1.03); filter: brightness(1.06); }
+    }
+    @keyframes loopGlow{
+      0%,100%{ filter: brightness(1); }
+      50%{ filter: brightness(1.10); }
+    }
+
+    /* Seal + Pull tab */
+    .seal{
+      position:absolute;
+      left:50%;
+      top: 52%;
+      transform: translate(-50%, -50%);
+      width: 88px;
+      height: 88px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,.20), transparent 40%),
+        linear-gradient(135deg, rgba(255,0,60,.98), rgba(255,70,140,.90));
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow:
+        0 18px 44px rgba(0,0,0,.55),
+        0 0 30px rgba(255,0,60,.18);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      z-index: 12;
+      transition: transform 250ms ease, filter 250ms ease;
+    }
+    .seal:hover{ transform: translate(-50%, -50%) scale(1.05); filter: brightness(1.07); }
+    .seal:active{ transform: translate(-50%, -50%) scale(.98); }
+    .seal span{
+      font-size: 32px;
+      filter: drop-shadow(0 12px 24px rgba(0,0,0,.45));
+      animation: heartBeat 1.25s ease-in-out infinite;
+    }
+    @keyframes heartBeat{ 0%,100%{ transform: scale(1); } 50%{ transform: scale(1.10); } }
+
+    .hint{
+      position:absolute;
+      left:50%;
+      top: calc(52% + 72px);
+      transform: translateX(-50%);
+      font-weight: 600;
+      color: rgba(255,255,255,.88);
+      text-shadow: 0 12px 32px rgba(0,0,0,.55);
+      z-index: 12;
+      opacity: .95;
+      font-size: 14px;
+    }
+
+    .pull-tab{
+      position:absolute;
+      left:50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      width: 205px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: linear-gradient(135deg, rgba(255,0,60,.22), rgba(255,255,255,.05));
+      color: rgba(255,255,255,.95);
+      font-weight: 700;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 8px;
+      z-index: 11;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 18px 42px rgba(0,0,0,.45);
+      transition: transform .18s ease, filter .18s ease;
+      will-change: transform;
+    }
+    .pull-tab:hover{ transform: translateX(-50%) scale(1.03); filter: brightness(1.08); }
+    .pull-tab:active{ transform: translateX(-50%) scale(.98); }
+    .pull-tab .arrow{ display:inline-block; animation: nudge 1.1s ease-in-out infinite; }
+    @keyframes nudge{ 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-3px); } }
+
+    /* ===== Card stays inside envelope (no overflow, no scroll) ===== */
+    .val-card{
+      position:absolute;
+      left: 22px;
+      right: 22px;
+      top: 102px;
+      bottom: 96px;
+      border-radius: 20px;
+      overflow: hidden; /* no scroll and nothing comes out */
+      padding: 16px;
+
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 18px 60px rgba(0,0,0,.58);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+
+      z-index: 10;
+      opacity: 0;
+      transform: translateY(52px);
+      transition: transform 980ms cubic-bezier(.18,.95,.18,1), opacity 760ms ease;
+    }
+
+    /* Typography */
+    .title{
+      font-family: "Playfair Display", serif;
+      font-weight: 600;
+      font-size: clamp(26px, 3vw, 42px);
+      margin: 4px 0 8px;
+      letter-spacing: .3px;
+    }
+
+    .whisper{
+      font-family: "Playfair Display", serif;
+      font-weight: 600;
+      margin: 6px 0 8px;
+      min-height: 24px;
+      text-shadow: 0 0 10px rgba(255,0,60,.18);
+    }
+    .whisper::after{ content:"▍"; margin-left:4px; animation: blink .9s infinite; opacity:.9; }
+    @keyframes blink{ 0%,49%{opacity:1;} 50%,100%{opacity:0;} }
+
+    /* Running candies */
+    .choco-run{
+      height: 40px;
+      margin: 8px 0 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: linear-gradient(90deg, rgba(255,0,60,.14), rgba(255,255,255,.04));
+      overflow:hidden;
+      position:relative;
+      box-shadow: 0 10px 26px rgba(0,0,0,.24);
+    }
+    .choco-run .track{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      gap: 14px;
+      padding-left: 14px;
+      width: max-content;
+      animation: runLeft 11.2s linear infinite;
+      filter: drop-shadow(0 10px 16px rgba(0,0,0,.35));
+    }
+    .choco-run .track span{ font-size: 18px; }
+    @keyframes runLeft{ 0%{ transform: translateX(0); } 100%{ transform: translateX(-50%); } }
+
+    /* Float row */
+    .choco-float{
+      position:relative;
+      height: 44px;
+      margin: 4px 0 8px;
+      overflow:hidden;
+    }
+    .choco{
+      position:absolute;
+      bottom:-4px;
+      font-size: 18px;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.5));
+      animation: floatUp 4.0s ease-in-out infinite;
+    }
+    .c1{ left: 6%;  animation-delay: 0s; }
+    .c2{ left: 26%; animation-delay: .6s; }
+    .c3{ left: 48%; animation-delay: 1.2s; }
+    .c4{ left: 70%; animation-delay: 1.8s; }
+    .c5{ left: 88%; animation-delay: 2.4s; }
+    @keyframes floatUp{
+      0%   { transform: translateY(16px) scale(0.95); opacity: 0; }
+      15%  { opacity: 1; }
+      50%  { transform: translateY(-12px) scale(1.03); opacity: .95; }
+      85%  { opacity: 1; }
+      100% { transform: translateY(16px) scale(0.95); opacity: 0; }
+    }
+
+    /* Paragraph grid: fits inside without scroll */
+    .content-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr; /* desktop */
+      gap: 10px;
+      align-content: start;
+    }
+
+    .pbox{
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.02));
+      box-shadow: 0 12px 26px rgba(0,0,0,.22);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 10px 11px;
+    }
+    .pbox p{
+      margin:0;
+      font-size: 13.2px;
+      line-height: 1.45;
+      color: rgba(255,255,255,.88);
+    }
+
+    .divider{
+      height: 3px;
+      width: 78px;
+      border-radius: 999px;
+      margin: 8px auto 8px;
+      background: linear-gradient(135deg, rgba(255,0,60,.95), rgba(255,90,160,.88));
+      box-shadow: 0 10px 22px rgba(255,0,60,.10);
+    }
+
+    /* Header row in card */
+    .top-actions{
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .mini{
+      font-size: 13px;
+      font-weight: 600;
+      opacity: .92;
+    }
+    .btnx{
+      border: 1px solid rgba(255,255,255,.18);
+      background: linear-gradient(135deg, rgba(255,0,60,.18), rgba(255,255,255,.05));
+      color: rgba(255,255,255,.95);
+      padding: 7px 10px;
+      border-radius: 999px;
+      cursor:pointer;
+      transition: transform .2s ease, filter .2s ease;
+      font-weight: 700;
+      font-family: "Poppins", sans-serif;
+      font-size: 12.5px;
+    }
+    .btnx:hover{ transform: scale(1.03); filter: brightness(1.07); }
+    .btnx:active{ transform: scale(.98); }
+
+    /* reveal */
+    .reveal{
+      opacity: 0;
+      transform: translateY(10px);
+      filter: blur(2px);
+      transition: opacity .75s ease, transform .75s ease, filter .75s ease;
+      transition-delay: var(--d, 0ms);
+    }
+    .opened .reveal{ opacity: 1; transform: translateY(0); filter: blur(0); }
+
+    /* confetti */
+    .burst{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      z-index: 20;
+    }
+    .burst i{
+      position:absolute;
+      left: 50%;
+      top: 52%;
+      transform: translate(-50%, -50%);
+      font-style: normal;
+      opacity: 0;
+      animation: pop 980ms ease forwards;
+      filter: drop-shadow(0 14px 22px rgba(0,0,0,.45));
+    }
+    @keyframes pop{
+      0%{ opacity:0; transform: translate(-50%,-50%) scale(.6); }
+      15%{ opacity:1; }
+      100%{ opacity:0; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) rotate(var(--rot)) scale(1.08); }
+    }
+
+    /* OPEN state */
+    .opened .flap{ transform: rotateX(-165deg); }
+    .opened .seal{ opacity: 0; transform: translate(-50%, -50%) scale(.7); pointer-events:none; }
+    .opened .hint{ opacity: 0; transform: translateX(-50%) translateY(8px); }
+    .opened .pull-tab{ opacity: 0; transform: translateX(-50%) translateY(10px); pointer-events:none; }
+    .opened .val-card{ opacity: 1; transform: translateY(0); }
+
+    /* Mobile: 1 column so it stays readable */
+    @media (max-width: 650px){
+      .envelope{ height: 980px; }
+      .val-card{ top: 98px; bottom: 104px; }
+      .content-grid{ grid-template-columns: 1fr; }
+      .pbox p{ font-size: 13.5px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .emoji-bg .e, .choco-run .track, .choco, .flap, .val-card, .burst i, .seal span, .pull-tab .arrow{
+        animation:none !important;
+        transition:none !important;
+      }
+      .opened .val-card{ opacity:1; transform: translateY(0); }
+      .flap{ transform: rotateX(-165deg); }
+      .seal, .hint, .pull-tab{ display:none; }
+      .cursor-glow{ display:none; }
+    }
   </style>
 </head>
 
 <body data-page="chocolate">
-  <div class="bg-glow"></div>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+  <div class="emoji-bg" id="emojiBg" aria-hidden="true"></div>
 
-  <main class="page-wrap">
+  <main class="stage">
+    <div class="wrap">
+      <div class="envelope" id="envelope">
+        <div class="burst" id="burst" aria-hidden="true"></div>
 
-    
-    <section class="card page-card">
+        <!-- Ribbon -->
+        <div class="ribbon" aria-hidden="true">
+          <div class="band-v"></div>
+          <div class="band-h"></div>
+          <div class="loop left"></div>
+          <div class="loop right"></div>
+          <div class="knot"></div>
+        </div>
 
-      <div class="chip">🍫 9 February — Chocolate Day</div>
+        <div class="flap" aria-hidden="true"></div>
+        <div class="side" aria-hidden="true"></div>
+        <div class="fold" aria-hidden="true"></div>
 
-      <h1 class="big">Sweet like you.</h1>
-      <!-- 🍫 Mini Chocolate Animation -->
-<div class="choco-float" aria-hidden="true">
-  <span class="choco c1">🍫</span>
-  <span class="choco c2">🍫</span>
-  <span class="choco c3">🍫</span>
-  <span class="choco c4">🍫</span>
-  <span class="choco c5">🍫</span>
-</div>
+        <button class="seal" id="sealBtn" aria-label="Open card">
+          <span>💗</span>
+        </button>
+        <div class="hint" id="hintText">Tap the heart or pull the tab</div>
 
-<!-- 💬 Typed whisper line -->
-<p class="whisper" id="whisperText"></p>
+        <button class="pull-tab" id="pullTab" type="button" aria-label="Pull to open">
+          Pull <span class="arrow">⬆</span> to open
+        </button>
 
+        <!-- Card -->
+        <section class="val-card" aria-label="Chocolate Day Card">
+          <div class="top-actions">
+            <div class="mini reveal" style="--d:120ms;">A little note for you 🍫</div>
+            <div style="display:flex; gap:8px;">
+              <button class="btnx" id="replayBtn" type="button">Replay ✨</button>
+              <button class="btnx" id="closeBtn" type="button">Close ✕</button>
+            </div>
+          </div>
 
-      <p class="muted sub">
-        If love had a taste, it would be the comfort you give me —
-        slow, warm, and impossible to forget.
-        The kind that melts gently and stays long after.
-      </p>
+          <div class="reveal" style="--d:160ms; opacity:.9; font-weight:600;">🍫 9 February Chocolate Day</div>
 
-      <p class="muted sub">
-        You’re not just sweet in words.
-        You’re sweet in the way you care,
-        the way you listen,
-        the way you stay.
-      </p>
+          <h1 class="title reveal" id="titleText" style="--d:220ms;">Sweet like you.</h1>
 
-      <div class="divider"></div>
+          <div class="choco-run reveal" style="--d:280ms;" aria-hidden="true">
+            <div class="track" id="runTrack">
+              <span>🍫</span><span>🍓</span><span>🍩</span><span>🧁</span><span>✨</span><span>💗</span>
+              <span>🍫</span><span>🍓</span><span>🍩</span><span>🧁</span><span>✨</span><span>💗</span>
+            </div>
+          </div>
 
-      <p class="muted sub">
-        I’ll be honest with you —
-        I’m greedy when it comes to you.
-        I want your time.
-        I want your attention.
-        I want your “did you eat?” texts and your “I miss you” messages.
-      </p>
+          <div class="choco-float reveal" style="--d:320ms;" aria-hidden="true">
+            <span class="choco c1">🍫</span>
+            <span class="choco c2">🍓</span>
+            <span class="choco c3">🍩</span>
+            <span class="choco c4">🧁</span>
+            <span class="choco c5">💗</span>
+          </div>
 
-      <p class="muted sub">
-        Not because I don’t trust you,
-        but because you feel like something precious,
-        and I hold precious things close. 😈💗
-      </p>
+          <div class="whisper reveal" id="whisperText" style="--d:360ms;"></div>
 
-      <div class="divider"></div>
+          <div class="divider reveal" style="--d:400ms;"></div>
 
-      <p class="muted sub">
-        So today isn’t about chocolate.
-        It’s about reminding you that
-        loving you feels comforting,
-        addictive,
-        and just a little dangerous —
-        in the best way.
-      </p>
+          <!-- Boxes grid (fits inside envelope, no scroll) -->
+          <div class="content-grid">
+            <div class="pbox reveal" style="--d:460ms;"><p>
+              If love had a taste, it would be the comfort you give me. Slow, warm, and impossible to forget. The kind that melts gently and stays long after.
+            </p></div>
 
-      <div class="nav">
-        <a class="btn ghost" href="propose.html">← Back: Propose Day 💌</a>
-        <a class="btn primary" href="teddy.html">Next: Teddy Day 🧸 →</a>
+            <div class="pbox reveal" style="--d:520ms;"><p>
+              You are not just sweet in words. You are sweet in the way you care. The way you listen. The way you stay.
+            </p></div>
+
+            <div class="pbox reveal" style="--d:580ms;"><p>
+              I will be honest with you. I am greedy when it comes to you. I want your time. I want your attention. I want your did you eat texts and your I miss you messages.
+            </p></div>
+
+            <div class="pbox reveal" style="--d:640ms;"><p>
+              Not because I do not trust you. Because you feel like something precious. And I hold precious things close. 😈💗
+            </p></div>
+
+            <div class="pbox reveal" style="--d:700ms;"><p>
+              When I think of you, everything feels quieter in the best way. As if the noise of the world steps back. Leaving only a calm that settles gently in my chest.
+            </p></div>
+
+            <div class="pbox reveal" style="--d:760ms;"><p>
+              There is something comforting about the way you exist. You do not rush me. You do not ask for more than I can give. You simply stay.
+            </p></div>
+
+            <div class="pbox reveal" style="--d:820ms;"><p>
+              I find beauty in small thoughts of you. Sitting beside you. Sharing silence. Letting time pass without needing to fill it with words.
+            </p></div>
+
+            <div class="pbox reveal" style="--d:880ms;"><p>
+              You make affection feel gentle. Patient and sincere. Like something that grows slowly and stays for a long time. That kind of love feels safe in your hands.
+            </p></div>
+
+            <div class="pbox reveal" style="--d:940ms;"><p>
+              If I ever look at you a little longer or hold on tighter, it is because you bring a quiet happiness into my life. One that feels warm and real.
+            </p></div>
+
+            <div class="pbox reveal" style="--d:1000ms;"><p>
+              So today is not about chocolate. It is about reminding you that loving you feels comforting. Addictive. And just a little dangerous in the best way.
+            </p></div>
+
+            <div class="pbox reveal" id="easterEggBox" style="--d:1060ms; display:none; text-align:center;">
+              <p style="font-style:italic;">You’re my favorite habit 💗</p>
+            </div>
+          </div>
+        </section>
       </div>
-
-    </section>
+    </div>
   </main>
 
-  <!-- Global lock + date lock + progress -->
   <script src="lock.js"></script>
-  <script src="week.js"></script>
+  <script src="wek.js"></script>
+
   <script>
-  // 💬 Typed whisper line
-  const whisperEl = document.getElementById("whisperText");
-  const whisperLine = "You’re addictive… and I don’t want the cure. 😈🍫";
+    // Cursor glow
+    const glow = document.getElementById("cursorGlow");
+    if (glow && window.matchMedia("(hover:hover)").matches){
+      window.addEventListener("mousemove", (e) => {
+        glow.style.setProperty("--x", (e.clientX - 230) + "px");
+        glow.style.setProperty("--y", (e.clientY - 230) + "px");
+      }, { passive: true });
+    }
 
-  if (whisperEl){
-    whisperEl.textContent = "";
-    let i = 0;
-    const speed = 32;
+    // Typed whisper
+    const whisperEl = document.getElementById("whisperText");
+    const whisperLine = "You’re addictive… and I don’t want the cure. 🍫💗";
+    let whisperTimer = null;
 
-    (function typeWhisper(){
-      whisperEl.textContent += whisperLine.charAt(i);
-      i++;
-      if(i < whisperLine.length) setTimeout(typeWhisper, speed);
-    })();
-  }
-</script>
+    function typeWhisper(){
+      if (!whisperEl) return;
+      whisperEl.textContent = "";
+      let i = 0, speed = 26;
+      if (whisperTimer) clearTimeout(whisperTimer);
 
+      (function loop(){
+        whisperEl.textContent += whisperLine.charAt(i);
+        i++;
+        if(i < whisperLine.length){
+          whisperTimer = setTimeout(loop, speed);
+        }
+      })();
+    }
+
+    // Seamless running emojis
+    const runTrack = document.getElementById("runTrack");
+    if (runTrack) runTrack.innerHTML = runTrack.innerHTML + runTrack.innerHTML;
+
+    // Emoji background (2 layers)
+    const emojiBg = document.getElementById("emojiBg");
+    const EMOJIS = ["🍫","🍓","🍩","🧁","✨","💗"];
+    const rand = (min,max)=> Math.random()*(max-min)+min;
+
+    if (emojiBg){
+      const createLayer = (count, speedRange, sizeRange, opacity) => {
+        for(let i=0;i<count;i++){
+          const e = document.createElement("span");
+          e.className = "e";
+          e.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
+          e.style.left = rand(0,100) + "vw";
+          e.style.bottom = rand(-20,20) + "vh";
+          e.style.setProperty("--dur", rand(speedRange[0], speedRange[1]) + "s");
+          e.style.setProperty("--dx", rand(-40,40) + "px");
+          e.style.setProperty("--r", rand(-14,14) + "deg");
+          e.style.animationDelay = rand(0,10) + "s";
+          e.style.fontSize = rand(sizeRange[0], sizeRange[1]) + "px";
+          e.style.opacity = opacity;
+          emojiBg.appendChild(e);
+        }
+      };
+      createLayer(16, [20, 28], [16, 24], 0.20);
+      createLayer(18, [10, 16], [22, 32], 0.34);
+    }
+
+    // Confetti hearts
+    const burst = document.getElementById("burst");
+    function heartsBurst(){
+      if (!burst) return;
+      burst.innerHTML = "";
+      const items = ["💗","💞","💖","✨","🍫","💘"];
+      for(let i=0;i<18;i++){
+        const el = document.createElement("i");
+        el.textContent = items[Math.floor(Math.random()*items.length)];
+        el.style.fontSize = rand(16,28) + "px";
+        el.style.setProperty("--x", rand(-280,280) + "px");
+        el.style.setProperty("--y", rand(-220,180) + "px");
+        el.style.setProperty("--rot", rand(-40,40) + "deg");
+        el.style.animationDelay = rand(0,140) + "ms";
+        burst.appendChild(el);
+      }
+    }
+
+    // Open/Close/Replay
+    const envelope = document.getElementById("envelope");
+    const sealBtn = document.getElementById("sealBtn");
+    const pullTab = document.getElementById("pullTab");
+    const closeBtn = document.getElementById("closeBtn");
+    const replayBtn = document.getElementById("replayBtn");
+
+    function openCard(){
+      envelope.classList.add("opened");
+      heartsBurst();
+      typeWhisper();
+    }
+    function closeCard(){
+      envelope.classList.remove("opened");
+      if (whisperEl) whisperEl.textContent = "";
+    }
+    function replay(){
+      envelope.classList.remove("opened");
+      if (whisperEl) whisperEl.textContent = "";
+      setTimeout(openCard, 90);
+    }
+
+    sealBtn?.addEventListener("click", openCard);
+    pullTab?.addEventListener("click", openCard);
+    closeBtn?.addEventListener("click", closeCard);
+    replayBtn?.addEventListener("click", replay);
+
+    // Pull drag
+    if (pullTab){
+      let startY = null;
+      let lastDy = 0;
+
+      pullTab.addEventListener("pointerdown", (e)=>{
+        startY = e.clientY;
+        lastDy = 0;
+        pullTab.setPointerCapture(e.pointerId);
+      });
+
+      pullTab.addEventListener("pointermove", (e)=>{
+        if (startY === null) return;
+        const dy = Math.max(0, startY - e.clientY);
+        lastDy = dy;
+        const lift = Math.min(32, dy);
+        pullTab.style.transform = `translateX(-50%) translateY(${-lift}px) scale(${1 + lift/350})`;
+      });
+
+      pullTab.addEventListener("pointerup", ()=>{
+        pullTab.style.transform = "translateX(-50%)";
+        if (lastDy > 24) openCard();
+        startY = null;
+      });
+
+      pullTab.addEventListener("pointercancel", ()=>{
+        pullTab.style.transform = "translateX(-50%)";
+        startY = null;
+      });
+    }
+
+    // Easter egg: click title 5 times
+    const title = document.getElementById("titleText");
+    const eggBox = document.getElementById("easterEggBox");
+    let clicks = 0;
+
+    if (title && eggBox){
+      title.style.cursor = "pointer";
+      title.title = "tap me";
+      title.addEventListener("click", () => {
+        clicks++;
+        if (clicks === 5){
+          eggBox.style.display = "block";
+        }
+      });
+    }
+  </script>
 </body>
 </html>
