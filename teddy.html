@@ -5,71 +5,214 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Teddy Day 🧸</title>
   <link rel="stylesheet" href="style.css" />
+
   <style>
-    .page-wrap{ min-height:100vh; display:grid; place-items:center; padding:22px; }
-    .page-card{ max-width:920px; width:100%; padding:22px; text-align:center; }
-    .big{ font-size: clamp(28px, 3.2vw, 44px); margin: 0 0 10px; }
-    .sub{ line-height:1.75; margin-top: 8px; }
-    .divider{
-      margin: 18px auto;
-      width: 80px;
-      height: 3px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, rgba(255,63,122,.9), rgba(255,45,85,.9));
+    /* ===== Base Glassy Neon Yellow Theme ===== */
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color:#111;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.6), transparent 40%),
+        radial-gradient(circle at 80% 30%, rgba(255,255,255,0.45), transparent 45%),
+        linear-gradient(135deg, #f6ff00, #dfff00, #baff00);
+      overflow-x:hidden;
     }
-    .nav{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:18px; }
+
+    /* Glass overlay */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.35),
+        rgba(255,255,255,0.05)
+      );
+      pointer-events:none;
+      z-index:0;
+    }
+
+    /* ===== Running Teddy Emoji Background ===== */
+    .teddy-bg{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:1;
+      overflow:hidden;
+    }
+
+    .teddy{
+      position:absolute;
+      font-size:34px;
+      opacity:0.25;
+      animation: runTeddy linear infinite;
+    }
+
+    .t1{ top:12%; animation-duration:10s; }
+    .t2{ top:30%; animation-duration:14s; font-size:38px; }
+    .t3{ top:55%; animation-duration:9s; }
+    .t4{ top:78%; animation-duration:16s; font-size:42px; }
+
+    @keyframes runTeddy{
+      0%{ transform: translateX(-25vw); }
+      100%{ transform: translateX(120vw); }
+    }
+
+    /* ===== Layout ===== */
+    .page-wrap{
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:22px;
+      position:relative;
+      z-index:2;
+    }
+
+    .page-card{
+      max-width:900px;
+      width:100%;
+      padding:26px;
+      text-align:center;
+      background:rgba(255,255,255,0.55);
+      backdrop-filter: blur(14px);
+      border-radius:18px;
+      box-shadow:0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .big{
+      font-size: clamp(28px, 3.2vw, 44px);
+      margin: 0 0 10px;
+    }
+
+    .sub{
+      line-height:1.75;
+      margin-top:8px;
+    }
+
+    .divider{
+      margin:18px auto;
+      width:80px;
+      height:3px;
+      border-radius:999px;
+      background:#111;
+    }
+
+    .nav{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:20px;
+    }
+
+    /* ===== Teddy Video Click Area ===== */
+    .teddy-wrap{
+      margin:25px 0;
+      cursor:pointer;
+    }
+
+    .teddy-wrap video{
+      width:200px;
+      max-width:80%;
+      border-radius:16px;
+      box-shadow:0 12px 30px rgba(0,0,0,0.25);
+      transition:transform .3s ease;
+    }
+
+    .teddy-wrap:hover video{
+      transform:scale(1.06);
+    }
+
+    .hint{
+      margin-top:10px;
+      font-size:14px;
+      opacity:0.7;
+    }
+
+    /* ===== Hidden Message ===== */
+    .hidden-message{
+      display:none;
+      animation:fadeUp .6s ease forwards;
+    }
+
+    @keyframes fadeUp{
+      from{opacity:0; transform:translateY(16px);}
+      to{opacity:1; transform:translateY(0);}
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce){
+      .teddy{ animation:none; }
+    }
   </style>
 </head>
 
 <body data-page="teddy">
-  <div class="bg-glow"></div>
 
-  <main class="page-wrap">
-    <section class="card page-card">
+<!-- 🧸 Running Teddy Background -->
+<div class="teddy-bg">
+  <span class="teddy t1">🧸</span>
+  <span class="teddy t2">🧸</span>
+  <span class="teddy t3">🧸</span>
+  <span class="teddy t4">🧸</span>
+</div>
 
-      <div class="chip">🧸 10 February — Teddy Day</div>
+<main class="page-wrap">
+  <section class="page-card">
+
+    <div class="chip">🧸 10 February — Teddy Day</div>
+
+    <!-- Teddy Video -->
+    <div class="teddy-wrap" onclick="openMessage()">
+      <video src="teddydil.mp4" autoplay loop muted playsinline></video>
+      <div class="hint">tap the teddy 🧸</div>
+    </div>
+
+    <!-- Hidden Message -->
+    <div id="message" class="hidden-message">
 
       <h1 class="big">If I could, I’d hug you nonstop.</h1>
 
-      <p class="muted sub">
-        Not the rushed kind.
-        The slow, quiet hugs.
-        The ones where you stop thinking
+      <p class="sub">
+        Not the rushed kind.<br>
+        The slow, quiet hugs.<br>
+        The ones where you stop thinking<br>
         and just breathe.
       </p>
 
-      <p class="muted sub">
-        I’d hold you until the world feels softer.
-        Until your thoughts calm down.
+      <p class="sub">
+        I’d hold you until the world feels softer.<br>
+        Until your thoughts calm down.<br>
         Until you remember that you’re safe here.
       </p>
 
       <div class="divider"></div>
 
-      <p class="muted sub">
-        You don’t need to be strong all the time.
-        You don’t need to pretend.
+      <p class="sub">
+        You don’t need to be strong all the time.<br>
+        You don’t need to pretend.<br>
         You don’t need to explain your silence.
       </p>
 
-      <p class="muted sub">
-        Just come here.
-        Let me be your comfort.
+      <p class="sub">
+        Just come here.<br>
+        Let me be your comfort.<br>
         Let me be the place you rest.
       </p>
 
       <div class="divider"></div>
 
-      <p class="muted sub">
-        And yes —
-        I’m clingy.
-        Because when something feels like home,
+      <p class="sub">
+        And yes, I’m clingy.<br>
+        Because when something feels like home,<br>
         you don’t walk away from it.
       </p>
 
-      <p class="muted sub">
-        You’re my comfort.
-        And I like you close.
+      <p class="sub">
+        You’re my comfort.<br>
+        And I like you close.<br>
         Always. 😈💗
       </p>
 
@@ -78,11 +221,21 @@
         <a class="btn primary" href="promise.html">Next: Promise Day 🤞 →</a>
       </div>
 
-    </section>
-  </main>
+    </div>
 
-  <!-- Global lock + date lock + progress -->
-  <script src="lock.js"></script>
-  <script src="week.js"></script>
+  </section>
+</main>
+
+<script>
+  function openMessage(){
+    document.getElementById("message").style.display = "block";
+  }
+</script>
+
+<!-- Existing lock scripts (kept safe) -->
+<script src="lock.js"></script>
+<script src="week.js"></script>
+
 </body>
 </html>
+
